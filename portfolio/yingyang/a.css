@@ -1,0 +1,53 @@
+
+div{
+  height:160px;
+  width:160px;
+  border-radius:50%;
+  background: linear-gradient(to bottom, #ffffff 50%,#000000 50%,#000000 50%,#000000 50%,#000000 100%,#2989d8 100%);
+  position: relative;
+  animation-duration: 2s;
+  animation-name: slidein;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  margin:50px auto;
+}
+
+p{
+  text-align: center;
+}
+
+@keyframes slidein {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+div::before{
+  content:'';
+  height:15px;
+  width:15px;
+  border:32.5px solid #000;
+  position: absolute;
+  left:0px;
+  top:40px;
+  border-radius:50%;
+  background:#fff;
+}
+
+div::after{
+  border:1px solid red;
+  content:'';
+  height:15px;
+  width:15px;
+  border:32.5px solid #fff;
+  position: absolute;
+  left:80px;
+  top:40px;
+  border-radius:50%;
+  background:#000;
+}
+
