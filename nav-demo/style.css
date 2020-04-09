@@ -1,0 +1,105 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+/* box-shadow讲解：https://blog.csdn.net/u014227715/article/details/79385292 */
+#mainX kbd{
+    font-size: 18px;
+    height: 4em;
+    width:4em;
+    display: inline-block;
+    position: relative;
+    border: 1px solid rgb(58, 58, 58);
+    height: 49px;
+    width: 70px;
+    color: rgb(207, 207, 207);
+    display: inline-block;
+    background: linear-gradient(to bottom, #282828 0%,#111111 100%);
+    border-radius: 10px;
+    /* display: inline-flex;
+    align-items: center;
+    justify-content: center; */
+    box-shadow: 0 3px rgb(58, 58, 58), 0 0 0 1px rgb(27, 27, 29), 0 3px 0 1px rgb(27, 27, 29);
+    margin: 0 5px;
+    position: relative;
+}
+
+#mainX kbd > .text{
+    position: absolute;
+    left: 4px;
+    top: 3px;
+}
+
+#mainX kbd > img{
+    position: absolute;
+    left: 4px;
+    top: 30px;
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+}
+
+
+
+/* 
+    display:none和visible:hidden都能把网页上某个元素隐藏起来，但两者有区别:
+    display:none ---不为被隐藏的对象保留其物理空间，即该对象在页面上彻底消失，通俗来说就是看不见也摸不到。
+    visible:hidden--- 使对象在网页上不可见，但该对象在网页上所占的空间没有改变，通俗来说就是看不见但摸得到。
+ */
+#mainX kbd > button{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    display: none;
+}
+
+/* 注意hover是加在kbd上的 */
+#mainX kbd:hover > button{
+    display: inline-block;
+}
+
+main{
+    text-align: center;
+    /* 下面三行代码设置子元素绝对居中 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;  /* 屏幕多高你就多高 */
+}
+
+#mainX{
+    display: inline-block;
+}
+
+
+#mainX div:nth-child(2){
+    margin-left: -22px;
+}
+
+#mainX div:nth-child(3){
+    margin-left: -96px;
+}
+
+#mainX > div{
+    margin: 15px;;
+}
+
+body{
+    /* 
+        图片水平垂直居中 
+        这里设置背景色为红色的原因是，当网速很慢时，图片下载就很慢，所以首先显示的是红色，然后会慢慢的会变成背景图片。
+        这里可以通过浏览器开发工具中的Network下的online选项，选择slow 3G就可以看出效果  
+    */
+    background: red url("./img/wall.jpg") no-repeat center center; 
+    /* 
+        backgroud-size：cover让图片自适应，cover的意思是一定要覆盖整个元素
+        将背景图片按比例覆盖元素空间，如果不设置的话，当用户屏幕宽度(或高度)大于图片的宽度（或者高度），
+        空出来的部分会出现红色块 
+    */
+    background-size: cover;  
+}
+
+body .wrapper{
+    background: rgba(255, 255, 255, 0.5);
+}

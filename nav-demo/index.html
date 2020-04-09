@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <header></header>
+    <main>
+        <div class="wrapper" id="mainX"></div>
+    </main>
+    <footer></footer>
+    <script>
+        // 1.初始化数据
+        var array=[
+            ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'p'],
+            ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
+            ['Z', 'X', 'C', 'V', 'B', 'N', 'M']
+        ]
+
+        var hash={
+            'Q':'qq.com',
+            'W':'weibo.com',
+            'T':'taobao.com'
+        }
+
+        // 取出localStorage中的xxx对应的hash
+        hashInLocalStorage = JSON.parse(localStorage.getItem("xxx") || "null")
+        if(hashInLocalStorage){
+            hash = hashInLocalStorage
+        }
+
+        // 2.生成键盘
+        // 遍历array，生成kbd标签
+        var index1=0
+        while(index1 < array.length){
+            div1 = document.createElement("div") // div1是容器名，都是可以随意取的
+            mainX.appendChild(div1)
+            row = array[index1]
+            var index2 = 0
+            while(index2 < row.length){
+                var kbd1 = document.createElement("kbd")
+                kbd1.className = "kbd"
+                var span = document.createElement("span")
+                span.className = "text"
+                var img = document.createElement("img")
+                /*
+                    如果hash[row[index2]]路径存在，就设置成"http://" + hash[row[index2]] + "/favicon.ico"
+                    如果不存在，就直接让src指向本地的一张图片。
+                */
+                if(hash[row[index2]]){
+                    img.src = "http://" + hash[row[index2]] + "/favicon.ico"
+                }else {
+                    img.src = "./img/smile.png"
+                }
+
+                /* 设置监听事件，监听img是否请求成功！即路径存在的情况下请求失败了则加载本地图片 */
+                img.onerror = function(e){
+                    // console.log("下载失败了")
+                    // console.log(e)
+                    e.target.src  = "./img/smile.png"
+                }
+                
+                span.textContent = row[index2]  //注意代码书写位置
+                var buttonX = document.createElement("button")
+                buttonX.textContent = "编辑"
+                buttonX.id = row[index2]
+                /* 
+                    下面这行代码这样写是错误的，因为经过26次循环之后，容器中只装有最后一个button按钮，而其他的button按钮全部插入到页面去了，
+                    所以不管你点击哪一个button，控制台输出的都是<button id=”M”>编辑</button>。除非可以每一次都生成一个新的容器，但是做不到！
+                    buttonX.onclick = function(){
+                        console.log(buttonX)
+                    }
+                */
+                buttonX.onclick = function(sdfdf){
+                    //console.log(sdfdf)  // sdfdf存储了点击的键的信息
+                    // sdfdf.taget就是用户点击的button
+                    var button2 = sdfdf.target
+                    var img2 = button2.previousSibling
+                    var key = button2["id"]
+                    var x = prompt('给我一个网址：') // 获取填写的网址
+                    img2.src = "http://" + x +"/favicon.ico"
+                    img2.onerror = function(xxx){
+                        xxx.target.src =  "./img/smile.png"
+                    }
+
+                    hash[key] = x // 哈希变更
+                    localStorage.setItem("xxx", JSON.stringify(hash)) // 将变更之后的hash存储在浏览器的Local Storage里
+                }
+                kbd1.appendChild(span)
+                kbd1.appendChild(img)
+                kbd1.appendChild(buttonX)
+                div1.appendChild(kbd1)
+                index2 = index2 + 1
+            }
+            index1 = index1 + 1
+        }
+
+        // 3.设置监听器，只要用户按压一个键，就会被监听到
+        // x里包含了我所要知道的所有东西，名字可以随意取
+        // 键盘上按d，可以看到x是：KeyboardEvent {isTrusted: true, key: "d", code: "KeyD", location: 0, ctrlKey: false, …}
+        document.onkeypress = function(x){
+            // console.log("我发现你输入了一个键")
+            // console.log("你按键的时候的所有信息是")
+            // console.log(x)
+            var key = x["key"].toLocaleUpperCase() // 获取用户按压的键
+            console.log(key)
+            var website = hash[key] //获取每个键对应的网站
+            // location.href = 'http://' + website  //当前窗口打开
+            window.open('http://' + website, '_blank') // 新窗口打开
+        }
+    </script>
+</body>
+</html>
