@@ -2,15 +2,37 @@
 <html>
 <head>
   <meta charset="utf-8">
+  <!-- 加上下面一行代码才是真正的让网页自适应屏幕 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>simple drawingBoard</title>
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
   <canvas id="canvas" width=300 height=300></canvas>
   <div id="actions" class="actions">
-      <button id="eraser">橡皮擦</button>
-      <button id="brush">画笔</button>
+    <svg class="icon active" id="brush">
+      <use xlink:href="#icon-edit"></use>
+    </svg>
+    <svg class="icon" id="eraser">
+      <use xlink:href="#icon-eraser"></use>
+    </svg>
+    <svg class="icon" id="clear">
+      <use xlink:href="#icon-clear"></use>
+    </svg>
+    <svg class="icon" id="download">
+      <use xlink:href="#icon-save"></use>
+    </svg>
   </div>
+  <ol class="color">
+    <li id="red" class="red active"></li>
+    <li id="green" class="green"></li>
+    <li id="blue" class="blue"></li>
+  </ol>
+  <ol class="sizes">
+    <li id="thin" class="thin"></li>
+    <li id="thick" class="thick"></li>
+  </ol>
   <script src="./main.js"></script>
+  <script src="//at.alicdn.com/t/font_1747424_m0rxb31or7.js"></script>
 </body>
 </html>
