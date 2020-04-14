@@ -179,8 +179,11 @@
         portfolioBar.className = "bar state3"
       }
     </script>
-    <!-- <script>
-      siteWelcome.classList.remove("active")
-    </script> -->
+    <script>
+      // 设置三秒后再移除active
+      setTimeout(function(){
+        siteWelcome.classList.remove("active")
+      }, 3000)
+    </script>
   </body>
 </html>
