@@ -10,10 +10,6 @@ body{
     clear: both;
 }
 
-.topNavBar nav{
-    float: right;
-}
-
 a{
     color: inherit; /* 让a标签继承父亲的颜色，默认是不继承父亲的样式的，因为它有默认样式*/
     text-decoration: none;
@@ -58,6 +54,20 @@ hr{
     top: 0;
     left: 0;
     width: 100%;
+    transition: all 0.5s;
+    color:#b7b7b7;
+}
+
+.topNavBar.sticky{
+    background: rgb(239, 239, 239);
+    padding: 15px 15px;
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.25);
+    z-index: 1;
+    color:#3d4451;
+}
+
+.topNavBar nav{
+    float: right;
 }
 
 .topNavBar-inner{
@@ -90,23 +100,75 @@ hr{
     float: left;
     margin-left: 17px;
     margin-right: 17px;
+    position: relative;
 }
 
 .topNavBar nav  > ul > li > a{
     font-size: 12px;
-    color: #b7b7b7;
+    color: inherit;
     font-weight: bold;
     border-top: 3px solid transparent;
     border-bottom: 3px solid transparent;
     padding-bottom: 5px;
     padding-top: 5px;
     display: block;  /* 加上这句就可以使得li包裹着a，所以所有元素都可以是块级元素，也可以是内级元素 */
+    position: relative;
 }
 
-.topNavBar nav  > ul > li > a:hover{
-    /* 当鼠标悬停在li元素上时显示边框 */
+/* .topNavBar nav  > ul > li > a:hover{
+    当鼠标悬停在li元素上时显示边框 
     border-bottom: 3px solid #e06567;
+} */
+.topNavBar nav  > ul > li.active > a::after{
+    content: '';
+    display: block;
+    width: 100%;
+    height: 3px;
+    background: #e06567;
+    position: absolute;
+    top:100%;
+    left: 0;
+    animation: menuSlide .3s;
 }
+
+@keyframes menuSlide{
+    from{width: 0;}
+    to{width: 100%;}
+}
+
+.topNavBar .submenu{
+    display: none;
+    position: absolute;
+    top:100%;
+    right: 0;
+    background: white;
+    color: #3d4451;
+}
+
+.topNavBar li.active > .submenu{
+    display: block;
+    animation: submenuSlide .3s;
+}
+
+@keyframes submenuSlide{
+    from{
+        margin-right: 100%;
+    }
+    to{
+        margin-right: 0%;
+    }
+}
+
+/*  
+    nav > ul >li这里的li是左浮动，能缩多小就是多小
+    submenu下的li元素是绝对定位的，如果不给他宽度，能缩多小就多小
+    因此设置submenu下的li元素不要换行 
+*/
+.topNavBar .submenu > li{
+    white-space: nowrap;
+    padding: 5px 5px;
+}
+
 
 .banner{
     background-image: url(./img/rs-cover.jpg);
@@ -248,7 +310,8 @@ hr{
  }
 
  body main{
-    margin-top: -350px;
+    margin-top: -345px;
+    margin-bottom: 50px;
 }
 
 body main .downloadResume-loading{
@@ -291,6 +354,7 @@ section.skills{
     width: 930px;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 50px;
 }
 
 section.skills > h2{
@@ -299,7 +363,7 @@ section.skills > h2{
     line-height: 1.2;
     font-weight: 600;
     text-align: center;
-    padding: 70px 0 32px 0;
+    padding: 20px 0 32px 0;
 }
 
 section.skills > ol{
@@ -367,7 +431,7 @@ section.portfolio > h2{
     line-height: 1.2;
     font-weight: 600;
     text-align: center;
-    padding: 70px 0 32px 0;
+    padding: 20px 0 32px 0;
 }
 
 
