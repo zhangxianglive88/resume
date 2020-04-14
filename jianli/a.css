@@ -251,7 +251,7 @@ hr{
     margin-top: -350px;
 }
 
-body main .downloadResume-wrapper{
+body main .downloadResume-loading{
     text-align: center;
 }
 
@@ -453,6 +453,5 @@ section.portfolio > .works > .small2{
     left: 636px;
     top: 297px;
 }
-
 
 
