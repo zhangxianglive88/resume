@@ -223,13 +223,25 @@
       for(let i=0; i<aTags.length; i++){
         aTags[i].onclick = function(x){
           x.preventDefault() //阻止标签a的默认跳转动作
-          let a = x.currentTarget
-          console.log('you clicked')
-          //a.href是经浏览器处理过的，是带http协议的，而a.getAttribute("href")就是自己写的东西
-          let href = a.getAttribute("href")  //"#siteAbout"
-          let element = document.querySelector(href) 
-          let top = element.offsetTop //获取元素距离页面最顶端的高度，注意这里不是相对于视口的高度！！！
-          window.scroll(0, top-60)       
+          // let a = x.currentTarget
+          // //a.href是经浏览器处理过的，是带http协议的，而a.getAttribute("href")就是自己写的东西
+          // let href = a.getAttribute("href")  //"#siteAbout"
+          // let element = document.querySelector(href) 
+          // let top = element.offsetTop //获取元素距离页面最顶端的高度，注意这里不是相对于视口的高度！！！
+          let TargetTop = document.querySelector(x.currentTarget.getAttribute("href")).offsetTop - 70//目标高度
+          let currentTop = window.scrollY //当前高度
+          let n = 25 // 一共动多少次
+          let duration = 500/n //多长时间动一次
+          let distance = (TargetTop - currentTop)/n //每次移动多少像素
+          let i = 0
+          let id = setInterval(()=>{
+            if(i == 25){
+              window.clearInterval(id)
+              return
+            }
+            i += 1
+            window.scroll(0, currentTop + distance * i)
+          }, duration)
         }
       }
     </script>
