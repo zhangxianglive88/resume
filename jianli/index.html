@@ -8,9 +8,9 @@
     <script src="./tween.js"></script>
   </head>
   <body>
-    <div id="siteWelcome" class="siteWelcome active">
+    <!-- <div id="siteWelcome" class="siteWelcome active">
       <div class="loading"></div>
-    </div>
+    </div> -->
     <div id="topNavBar" class="topNavBar">
       <div class="topNavBar-inner clearfix">
         <a href="#" class="logo" alt="logo">
@@ -58,7 +58,7 @@
       <div class="mask"></div>
     </div>
     <main>
-      <div id="siteAbout" class="userCard">
+      <div data-x id="siteAbout" class="userCard">
         <div class="pictureAndText clearfix">
           <div class="picture">
             <img src="./img/avatar.jpg" width:299 height:347 alt="头像">
@@ -114,48 +114,48 @@
       </p>
 
     </main>
-    <section id="siteSkills" class="skills">
+    <section data-x id="siteSkills" class="skills">
       <h2>技能</h2>
       <ol class="clearfix">
         <li>
           <h3>HTML 5 &amp; CSS 3</h3>
           <div class="processBar">
-            <div class="process"></div>
+            <div class="process" style="width:20%;"></div>
           </div>
         </li>
         <li>
           <h3>JavaScript</h3>
           <div class="processBar">
-            <div class="process"></div>
+            <div class="process" style="width:30%;"></div>
           </div>
         </li>
         <li>
           <h3>jQuery</h3>
           <div class="processBar">
-            <div class="process"></div>
+            <div class="process" style="width:40%;"></div>
           </div>
         </li>
         <li>
           <h3>Vue</h3>
           <div class="processBar">
-            <div class="process"></div>
+            <div class="process" style="width:50%;"></div>
           </div>
         </li>
         <li>
           <h3>React</h3>
           <div class="processBar">
-            <div class="process"></div>
+            <div class="process" style="width:60%;"></div>
           </div>
         </li>
         <li>
           <h3>HTTP</h3>
           <div class="processBar">
-            <div class="process"></div>
+            <div class="process" style="width:80%;"></div>
           </div>
         </li>
       </ol>
     </section>
-    <section id="siteWorks" class="portfolio">
+    <section data-x id="siteWorks" class="portfolio">
       <h2>作品集</h2>
       <nav>
         <ol class="clearfix">
@@ -191,11 +191,20 @@
       }
     </script>
     <script>
-      // 设置三秒后再移除active
-      setTimeout(function(){
-        siteWelcome.classList.remove("active")
-      }, 1000)
+      // // 设置三秒后再移除active
+      // setTimeout(function(){
+      //   siteWelcome.classList.remove("active")
+      // }, 1000)
 
+      
+      // 添加offset类
+      let specialTags = document.querySelectorAll('[data-x]')
+      for(let i=0; i<specialTags.length; i++){
+        specialTags[i].classList.add("offset")
+      }
+      setTimeout(function(){
+        yyy()
+      }, 50)
       window.onscroll = function(x){
         // console.log(window.scrollY) 记录y轴上滚动的距离
         if(window.scrollY>0){
@@ -203,7 +212,34 @@
         }else{
           topNavBar.classList.remove("sticky")
         }
+        yyy()
       }
+
+      function yyy(){
+        let specialTags = document.querySelectorAll('[data-x]')
+        let y = window.scrollY
+        //minDistanceIndex:离窗口顶部最近的元素
+        let minDistanceIndex = 0
+        for(let i=1; i<specialTags.length; i++){
+          if(Math.abs(y-specialTags[i].offsetTop) < Math.abs(y-specialTags[minDistanceIndex].offsetTop)){
+            minDistanceIndex = i
+          }
+        }
+        specialTags[minDistanceIndex].classList.remove("offset")
+        for(let i=0; i<specialTags.length; i++){
+          specialTags[i].classList.remove("active")
+        }
+        specialTags[minDistanceIndex].classList.add("active")
+        let id = specialTags[minDistanceIndex].id
+        let a = document.querySelector('a[href="#' + id + '"]')
+        let li = a.parentNode
+        let brotherAndMe = li.parentNode.children
+        for(let i=0; i<brotherAndMe.length; i++){
+          brotherAndMe[i].classList.remove("highlight")
+        }
+        li.classList.add("highlight")
+      }
+
       let liTags = document.querySelectorAll("nav.menu > ul li")
       for(let i=0; i<liTags.length; i++){
         liTags[i].onmouseenter = function(x){
@@ -236,16 +272,17 @@
           // let top = element.offsetTop //获取元素距离页面最顶端的高度，注意这里不是相对于视口的高度！！！
           let TargetTop = document.querySelector(x.currentTarget.getAttribute("href")).offsetTop - 70//目标高度
           let currentTop = window.scrollY //当前高度
-          let s = TargetTop - currentTop
-          const coords = { y: currentTop};
-          let t = Math.abs(s/100) * 200
-          const tween = new TWEEN.Tween(coords)
-                  .to({ y: TargetTop}, t)
-                  .easing(TWEEN.Easing.Quadratic.InOut)
-                  .onUpdate(() => {
-                    window.scroll(0, coords.y)
+          let s = TargetTop - currentTop //路程
+          const coords = { y: currentTop}; //起始位置
+          let t = Math.abs(s/100) * 200  //时间
+          const tween = new TWEEN.Tween(coords)  //起始位置
+                  .to({ y: TargetTop}, t)  //结束位置和时间
+                  .easing(TWEEN.Easing.Quadratic.InOut)  //缓动类型
+                  .onUpdate(() => { 
+                    //coords.y已经变了
+                    window.scroll(0, coords.y)  //如何更新界面
                   })
-                  .start();
+                  .start(); //开始缓动
             }
       }
     </script>

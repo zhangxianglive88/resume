@@ -37,6 +37,20 @@ hr{
     border-top: 1px solid rgb(222, 222, 222);
 }
 
+/* [data-x].active{
+    outline: 10px solid red;
+} */
+
+[data-x].offset{
+    transform: translateY(150px);
+}
+
+[data-x]{
+    transform: translateY(0px);
+    transition: all 1s;
+}
+
+
 .topNavBar{
     /* padding: 34px 34px 34px 34px; 上右下左 */
     padding: 34px 0 34px 0;
@@ -119,7 +133,8 @@ hr{
     当鼠标悬停在li元素上时显示边框 
     border-bottom: 3px solid #e06567;
 } */
-.topNavBar nav  > ul > li.active > a::after{
+.topNavBar nav  > ul > li.active > a::after,
+.topNavBar nav  > ul > li.highlight > a::after{
     content: '';
     display: block;
     width: 100%;
@@ -409,6 +424,7 @@ section.skills .processBar{
     background: rgb(250,225,225);
     border-radius: 5px;
     margin: 4px 0px 40px;
+    overflow: hidden;
 }
 
 section.skills .processBar > .process{
@@ -416,6 +432,12 @@ section.skills .processBar > .process{
     background: red;
     width: 70%;
     border-radius: 5px;
+    transform: translateX(0px);
+    transition: all 1s;
+}
+
+section.skills.offset .process{
+    transform: translateX(-100%);
 }
 
 /* portfolio:作品集 */
