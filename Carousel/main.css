@@ -1,0 +1,16 @@
+#images{
+    /* 设置弹性盒子,盒子里的元素称为项目，默认项目按从左到右的顺序排列，并且不换行！ */
+    display:flex; 
+    transition: all .5s;
+}
+  
+#play{
+    border:10px solid green;
+    width:300px;
+    /* 超出部分隐藏 */
+    overflow: hidden; 
+}
+  
+.red{
+    color:red;
+}
