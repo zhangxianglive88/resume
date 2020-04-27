@@ -5,44 +5,64 @@ let current = 0
 
 makeFakeSlides() // 做一些假的图片
 $slides.css({transform:'translateX(-500px)'}) // 设置图片初始位置
-bindEvents() // 绑定事件
+bindEvents()
+$(next).on('click', function(){
+    goToSlide(current + 1)
+})
+$(previous).on('click', function(){
+    goToSlide(current - 1)
+})
+
+let timer = setInterval(()=>{
+    goToSlide(current + 1)
+}, 5000)
+
+$('.window').on('mouseenter', ()=>{
+    window.clearInterval(timer)
+}).on('mouseleave', ()=>{
+    timer = setInterval(()=>{
+        goToSlide(current + 1)
+    }, 5000)
+})
 
 function bindEvents(){
-    $buttons.eq(0).on('click', ()=>{
-        if(current == 2){
-            console.log("说明你是从最后一张到第一张")
-            $slides.css({transform:'translateX(-2000px)'})
-            .one('transitionend', ()=>{
-                $slides.hide()
-                   .offset()  
-                $slides.css({transform:'translateX(-500px)'})
-                    .show()
-            })
-        }else{
-            $slides.css({transform:'translateX(-500px)'})
-        }
-        current = 0
+
+    $('#buttonWrapper').on('click', 'button', function(e){
+        let $buttons = $(e.currentTarget)
+        let index = $buttons.index()
+        goToSlide(index)
     })
+}
+
+function goToSlide(index){
+    if(index > $buttons.length-1){
+        index = 0
+    }else if(index < 0){
+        index = $buttons.length-1
+    }
     
-    $buttons.eq(1).on('click', ()=>{
-        $slides.css({transform:'translateX(-1000px)'})
-        current = 1
-    })
-    
-    $buttons.eq(2).on('click', ()=>{
-        if(current == 0){
-            $slides.css({transform:'translateX(0px)'})
-            .one('transitionend', ()=>{
-                $slides.hide()
-                   .offset()  
-                $slides.css({transform:'translateX(-1500px)'})
-                    .show()
-            })
-        }else{
-            $slides.css({transform:'translateX(-1500px)'})
-        }
-        current = 2
-    })
+    if(current === $buttons.length -1 && index === 0){
+        // 最后一张到第一张
+        $slides.css({transform:`translateX(${- ($buttons.length + 1) * 500}px)`})
+        .one('transitionend', ()=>{
+            $slides.hide()
+               .offset()  
+            $slides.css({transform:`translateX(${- (index + 1) * 500}px)`})
+                .show()
+        })
+    }else if(current === 0 && index === $buttons.length - 1){
+        // 第一张到最后一张
+        $slides.css({transform:'translateX(0px)'})
+        .one('transitionend', ()=>{
+            $slides.hide()
+               .offset()  
+            $slides.css({transform:`translateX(${- (index + 1) * 500}px)`})
+                .show()
+        })
+    }else {
+        $slides.css({transform:`translateX(${- (index + 1) * 500}px)`})
+    }
+    current = index
 }
 
 function makeFakeSlides(){
